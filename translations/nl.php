@@ -1,0 +1,32 @@
+<?php
+
+global $_MODULE;
+$_MODULE = array();
+$_MODULE['<{paypro}prestashop>paypro_0c197020039cb63cd51bdd7f7097caf6'] = 'PayPro';
+$_MODULE['<{paypro}prestashop>paypro_508c17a7bc9b201e761590032e6a7d56'] = 'PayPro betalingen';
+$_MODULE['<{paypro}prestashop>paypro_7c7277554e7832201a653fb93f0ba9c2'] = 'API key moet worden opgegeven';
+$_MODULE['<{paypro}prestashop>paypro_a02758d758e8bec77a33d7f392eb3f8a'] = 'Geen valuta gekozen voor deze module';
+$_MODULE['<{paypro}prestashop>paypro_04ffc3e9a3a530eb491d56ea3296b945'] = 'Afterpay';
+$_MODULE['<{paypro}prestashop>paypro_870cf6bc77bbadd038aeb8d942c9cb18'] = 'Bancontact';
+$_MODULE['<{paypro}prestashop>paypro_f91ab041fe9d6057740394b8b7903a0f'] = 'iDEAL';
+$_MODULE['<{paypro}prestashop>paypro_b48167465ffc278e8096a57fb3e5cf24'] = 'Mastercard';
+$_MODULE['<{paypro}prestashop>paypro_9b88c95a15e018c3f8038a7d0160145c'] = 'Paypal';
+$_MODULE['<{paypro}prestashop>paypro_a22ce02ce5af761bd1d3b9ba1beef127'] = 'Bankoverschrijving';
+$_MODULE['<{paypro}prestashop>paypro_80ccbf6bc10ab01a0df43589b2361e98'] = 'Automatische incasso';
+$_MODULE['<{paypro}prestashop>paypro_4bb78080b7dd7488ad47bea58c86b6c3'] = 'Sofort Digital';
+$_MODULE['<{paypro}prestashop>paypro_f0f404e78d5ce50fcec2a07aa17977d9'] = 'Sofort Physical';
+$_MODULE['<{paypro}prestashop>paypro_89fc0d6fe12b0e0c1af5c7a0373435a6'] = 'Visa';
+$_MODULE['<{paypro}prestashop>paypro_c888438d14855d7d96a2724ee9c306bd'] = 'Instellingen gewijzigd';
+$_MODULE['<{paypro}prestashop>validation_e2b7dec8fa4b498156dfee6e4c84b156'] = 'Deze betaalmethode is niet beschikbaar';
+$_MODULE['<{paypro}prestashop>issuers_c5ddab2a7bb11a7ee8f5a131db40bfae'] = 'Selecteer je bank';
+$_MODULE['<{paypro}prestashop>admin_69371ff437328f749c8d1539fae06379'] = 'Deze module maakt het mogelijk om betalingen te accepteren via PayPro';
+$_MODULE['<{paypro}prestashop>admin_64a4280dd090379fda12c51847b5cd35'] = 'Het is nodig om eerst een PayPro API key in te stellen';
+$_MODULE['<{paypro}prestashop>admin_cce7a531030074cb218df4f1d8986b38'] = 'Ook is een Product ID verplicht als je gebruik wilt maken van Mastercard, Visa of Sofort betalingen';
+$_MODULE['<{paypro}prestashop>admin_f4f70727dc34561dfde1a3c529b6205c'] = 'Instellingen';
+$_MODULE['<{paypro}prestashop>admin_428bfc853e841c0df085fdbf545a9921'] = 'Testmode';
+$_MODULE['<{paypro}prestashop>admin_b9f5c797ebbf55adccdd8539a65a0241'] = 'Uit';
+$_MODULE['<{paypro}prestashop>admin_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Aan';
+$_MODULE['<{paypro}prestashop>admin_d876ff8da67c3731ae25d8335a4168b4'] = 'API key';
+$_MODULE['<{paypro}prestashop>admin_97f08a40f22a625d0cbfe03db3349108'] = 'Product ID';
+$_MODULE['<{paypro}prestashop>admin_c9cc8cce247e49bae79f15173ce97354'] = 'Opslaan';
+$_MODULE['<{paypro}prestashop>admin_0da8d9a75492046bea7f314521e07cae'] = 'Betaalmethodes';
