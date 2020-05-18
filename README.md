@@ -31,7 +31,7 @@ With this plugin you easily add all PayPro payment gateways to your Prestashop w
 ## Installation
 
 1. In the Prestashop admin panel go to Modules -> Modules Manager. Click on 'Upload a module'.
-2. Select downloaded 'prestashop.zip' file and installation should start immediately.
+2. Select downloaded archive file and installation should start immediately.
 3. Click 'Configure' after successful installation.
 4. Set your PayPro API key and Product ID in 'Settings' section.
 5. Now enable the payment methods you want in 'Payment methods' section.
