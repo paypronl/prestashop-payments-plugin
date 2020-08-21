@@ -25,7 +25,7 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 		$callbackUrl = $this->context->link->getModuleLink('paypro', 'callback');
 
 		$data = [
-			'amount' => round($cart->getOrderTotal(true, Cart::BOTH), 2) * 100,
+			'amount' => (int) (round($cart->getOrderTotal(true, Cart::BOTH) * 100, 0)),
 			'pay_method' => $payMethod,
 			'return_url' => $redirectUrl,
 			'cancel_url' => $redirectUrl,
