@@ -152,8 +152,8 @@ class PayPro extends PaymentModule {
 				case 'completed':
 					$status = Configuration::get('PS_OS_PAYMENT');
 					break;
-				default:
-					$status = Configuration::get('PS_OS_BANKWIRE');
+				case 'cancelled':
+					$status = Configuration::get('PS_OS_ERROR');
 			}
 
 			// Order update
