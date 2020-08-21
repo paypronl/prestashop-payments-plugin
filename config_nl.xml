@@ -2,7 +2,7 @@
 <module>
     <name>paypro</name>
     <displayName><![CDATA[PayPro]]></displayName>
-    <version><![CDATA[1.0.0]]></version>
+    <version><![CDATA[1.0.1]]></version>
     <description><![CDATA[PayPro betalingen]]></description>
     <author><![CDATA[PayPro]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
