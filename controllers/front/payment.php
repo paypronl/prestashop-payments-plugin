@@ -17,6 +17,7 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 		$address = new Address($cart->id_address_invoice);
 		$customer = $this->context->customer;
 		$language = new Language($customer->id_lang);
+		$country = new Country($address->id_country);
 
 		$api = PayProHelper::createApi();
 
@@ -40,7 +41,7 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 			'consumer_address' => trim($address->address1 . ' ' . $address->address2),
 			'consumer_city' => $address->city,
 			'consumer_companyname' => $address->company,
-			'consumer_country' => $address->country,
+			'consumer_country' => $country->iso_code,
 			'consumer_postal' => $address->postcode,
 		];
 
