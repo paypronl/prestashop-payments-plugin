@@ -40,7 +40,7 @@ class PayPro extends PaymentModule {
 
 		$this->paymentMethods = [
 			PayProHelper::AFTERPAY => ['label' => $this->l('Afterpay'), 'code' => 'afterpay/giro'],
-			PayProHelper::BANCONTACT => ['label' => $this->l('Bancontact'), 'code' => 'bancontact/mistercash'],
+			PayProHelper::BANCONTACT => ['label' => $this->l('Bancontact'), 'code' => 'bancontact/mrcash'],
 			PayProHelper::IDEAL => ['label' => $this->l('iDEAL'), 'code' => 'ideal'],
 			PayProHelper::MASTERCARD => ['label' => $this->l('Mastercard'), 'code' => 'creditcard/mastercard'],
 			PayProHelper::PAYPAL => ['label' => $this->l('Paypal'), 'code' => 'paypal/direct'],
