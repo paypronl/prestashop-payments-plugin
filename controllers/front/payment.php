@@ -31,7 +31,7 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 			'return_url' => $redirectUrl,
 			'cancel_url' => $redirectUrl,
 			'postback_url' => $callbackUrl,
-			'description' => Configuration::get('PS_SHOP_NAME'),
+			'description' => strval($cart->id),
 			'locale' => strtoupper($language->iso_code),
 			'custom' => strval($cart->id),
 			'consumer_email' => $customer->email,
@@ -59,5 +59,3 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 		die(Tools::displayError("Error occurred!"));
 	}
 }
-
-
