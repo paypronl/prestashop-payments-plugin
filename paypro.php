@@ -53,7 +53,7 @@ class PayPro extends PaymentModule {
 	}
 
 	public function install() {
-		return parent::install() && $this->registerHook('paymentOptions') && Db::getInstance()->Execute(
+		return parent::install() && $this->registerHook('paymentOptions') && $this->addOrderStatus() && Db::getInstance()->Execute(
 			'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'paypro` (`cart_id` int(11), `payment_hash` varchar(255)) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;');
 	}
 
@@ -63,6 +63,39 @@ class PayPro extends PaymentModule {
 		}
 
 		return Db::getInstance()->Execute( 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'paypro`') && parent::uninstall();
+	}
+
+    private function addOrderStatus() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
+
+		// Check if order state exist
+		$state_exist = false;
+        foreach ($states as $state) {
+            if (in_array($statusName, $state)) {
+                $state_exist = true;
+                break;
+            }
+        }
+
+        // If the state does not exist, we create it
+        if (!$state_exist) {
+            $order_state = new OrderState();
+            $order_state->color = '#4169E1';
+            $order_state->send_email = false;
+            $order_state->module_name = $this->name;
+            $order_state->name = array();
+
+            $languages = Language::getLanguages(false);
+
+            foreach ($languages as $language)
+                $order_state->name[ $language['id_lang'] ] = $statusName;
+
+            // Update object
+            $order_state->add();
+        }
+
+        return true;
 	}
 
 	public function getContent() {
@@ -143,6 +176,17 @@ class PayPro extends PaymentModule {
 		return '';
 	}
 
+	private function getOrderStatusId() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
+
+		foreach ($states as $state) {
+            if (in_array($statusName, $state)) {
+                return $state['id_order_state'];
+            }
+        }
+	}
+
 	public function processPayment($cartID, $paymentHash) {
 		$api = PayProHelper::createApi();
 		$payment = $api->getPayment($paymentHash);
@@ -154,6 +198,9 @@ class PayPro extends PaymentModule {
 					break;
 				case 'cancelled':
 					$status = Configuration::get('PS_OS_ERROR');
+					break;
+                default:
+                    $status = $this->getOrderStatusId();
 			}
 
 			// Order update
