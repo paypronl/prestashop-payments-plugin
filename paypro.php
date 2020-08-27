@@ -62,41 +62,56 @@ class PayPro extends PaymentModule {
 			Configuration::deleteByName($field);
 		}
 
-		return Db::getInstance()->Execute( 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'paypro`') && parent::uninstall();
+		return Db::getInstance()->Execute( 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'paypro`') && parent::uninstall() && $this->removeOrderStatus();
 	}
 
-    private function addOrderStatus() {
+	private function addOrderStatus() {
 		$statusName = $this->l('Awaiting PayPro payment');
 		$states = OrderState::getOrderStates((int)$this->context->language->id);
 
 		// Check if order state exist
-		$state_exist = false;
+		$stateExist = false;
         foreach ($states as $state) {
             if (in_array($statusName, $state)) {
-                $state_exist = true;
+                $stateExist = true;
                 break;
             }
         }
 
         // If the state does not exist, we create it
-        if (!$state_exist) {
-            $order_state = new OrderState();
-            $order_state->color = '#4169E1';
-            $order_state->send_email = false;
-            $order_state->module_name = $this->name;
-            $order_state->name = array();
+        if (!$stateExist) {
+            $orderState = new OrderState();
+            $orderState->color = '#4169E1';
+            $orderState->send_email = false;
+            $orderState->module_name = $this->name;
+            $orderState->name = array();
 
             $languages = Language::getLanguages(false);
 
             foreach ($languages as $language)
-                $order_state->name[ $language['id_lang'] ] = $statusName;
+                $orderState->name[ $language['id_lang'] ] = $statusName;
 
             // Update object
-            $order_state->add();
+            $orderState->add();
         }
 
         return true;
 	}
+
+    private function removeOrderStatus() {
+        $statusName = $this->l('Awaiting PayPro payment');
+        $states = OrderState::getOrderStates((int)$this->context->language->id);
+
+        foreach ($states as $state) {
+            if (in_array($statusName, $state)) {
+                $orderState = new OrderState($state['id_order_state']);
+                $orderState->deleted = 1;
+                $orderState->update();
+            }
+        }
+
+        return true;
+    }
 
 	public function getContent() {
 		// Check post
