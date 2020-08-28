@@ -2,7 +2,7 @@
 
 # PayPro Gateways - Prestashop
 
-[![Software License](https://img.shields.io/badge/license-GPLv2-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/License-MIT.svg?style=flat-square)](LICENSE.md)
 
 With this plugin you easily add all PayPro payment gateways to your Prestashop webshop. Currently the plugin supports the following gateways:
 
@@ -20,13 +20,7 @@ With this plugin you easily add all PayPro payment gateways to your Prestashop w
 ## Requirements
 
 - PHP version 5.6 or greater
-- PHP extension cUrl
-- PHP extension DOM
-- PHP extension Fileinfo
-- PHP extension GD
-- PHP extension Intl
-- PHP extension Mbstring
-- PHP extension Zip
+- Prestashop 1.7+
 
 ## Installation
 
