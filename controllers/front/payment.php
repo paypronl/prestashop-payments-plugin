@@ -23,13 +23,14 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 
 		// Create payment
 		$redirectUrl = $this->context->link->getModuleLink('paypro', 'validation') . '?id_cart=' . $cart->id;
+		$cancelUrl = $this->context->link->getModuleLink('paypro', 'cancelation') . '?id_cart=' . $cart->id;
 		$callbackUrl = $this->context->link->getModuleLink('paypro', 'callback');
 
 		$data = [
 			'amount' => (int) (round($cart->getOrderTotal(true, Cart::BOTH) * 100, 0)),
 			'pay_method' => $payMethod,
 			'return_url' => $redirectUrl,
-			'cancel_url' => $redirectUrl,
+			'cancel_url' => $cancelUrl,
 			'postback_url' => $callbackUrl,
 			'description' => Configuration::get('PS_SHOP_NAME'),
 			'locale' => strtoupper($language->iso_code),
