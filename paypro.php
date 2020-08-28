@@ -53,7 +53,7 @@ class PayPro extends PaymentModule {
 	}
 
 	public function install() {
-		return parent::install() && $this->registerHook('paymentOptions') && Db::getInstance()->Execute(
+		return parent::install() && $this->registerHook('paymentOptions') && $this->addOrderStatus() && Db::getInstance()->Execute(
 			'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'paypro` (`cart_id` int(11), `payment_hash` varchar(255)) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;');
 	}
 
@@ -62,7 +62,55 @@ class PayPro extends PaymentModule {
 			Configuration::deleteByName($field);
 		}
 
-		return Db::getInstance()->Execute( 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'paypro`') && parent::uninstall();
+		return Db::getInstance()->Execute( 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'paypro`') && parent::uninstall() && $this->removeOrderStatus();
+	}
+
+	private function addOrderStatus() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
+
+		// Check if order state exist
+		$stateExist = false;
+		foreach ($states as $state) {
+			if (in_array($statusName, $state)) {
+				$stateExist = true;
+				break;
+			}
+		}
+
+		// If the state does not exist, we create it
+		if (!$stateExist) {
+			$orderState = new OrderState();
+			$orderState->color = '#4169E1';
+			$orderState->send_email = false;
+			$orderState->module_name = $this->name;
+			$orderState->name = array();
+
+			$languages = Language::getLanguages(false);
+
+			foreach ($languages as $language)
+				$orderState->name[ $language['id_lang'] ] = $statusName;
+
+			// Update object
+			$orderState->add();
+		}
+
+		return true;
+	}
+
+	private function removeOrderStatus() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
+
+		foreach ($states as $state) {
+			if (in_array($statusName, $state)) {
+				$orderState = new OrderState($state['id_order_state']);
+				$orderState->deleted = 1;
+				$orderState->update();
+			}
+		}
+
+		return true;
 	}
 
 	public function getContent() {
@@ -143,6 +191,17 @@ class PayPro extends PaymentModule {
 		return '';
 	}
 
+	private function getOrderStatusId() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
+
+		foreach ($states as $state) {
+			if (in_array($statusName, $state)) {
+				return $state['id_order_state'];
+			}
+		}
+	}
+
 	public function processPayment($cartID, $paymentHash) {
 		$api = PayProHelper::createApi();
 		$payment = $api->getPayment($paymentHash);
@@ -154,6 +213,9 @@ class PayPro extends PaymentModule {
 					break;
 				case 'cancelled':
 					$status = Configuration::get('PS_OS_ERROR');
+					break;
+				default:
+					$status = $this->getOrderStatusId();
 			}
 
 			// Order update

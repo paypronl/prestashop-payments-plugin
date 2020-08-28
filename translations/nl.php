@@ -16,6 +16,7 @@ $_MODULE['<{paypro}prestashop>paypro_80ccbf6bc10ab01a0df43589b2361e98'] = 'Autom
 $_MODULE['<{paypro}prestashop>paypro_4bb78080b7dd7488ad47bea58c86b6c3'] = 'Sofort Digital';
 $_MODULE['<{paypro}prestashop>paypro_f0f404e78d5ce50fcec2a07aa17977d9'] = 'Sofort Physical';
 $_MODULE['<{paypro}prestashop>paypro_89fc0d6fe12b0e0c1af5c7a0373435a6'] = 'Visa';
+$_MODULE['<{paypro}prestashop>paypro_389d78f71b874c2c4e27edea32e4d8be'] = 'Wachten op PayPro betaling';
 $_MODULE['<{paypro}prestashop>paypro_c888438d14855d7d96a2724ee9c306bd'] = 'Instellingen gewijzigd';
 $_MODULE['<{paypro}prestashop>validation_e2b7dec8fa4b498156dfee6e4c84b156'] = 'Deze betaalmethode is niet beschikbaar';
 $_MODULE['<{paypro}prestashop>issuers_c5ddab2a7bb11a7ee8f5a131db40bfae'] = 'Selecteer je bank';
