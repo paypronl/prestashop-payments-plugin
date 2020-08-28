@@ -71,47 +71,47 @@ class PayPro extends PaymentModule {
 
 		// Check if order state exist
 		$stateExist = false;
-        foreach ($states as $state) {
-            if (in_array($statusName, $state)) {
-                $stateExist = true;
-                break;
-            }
-        }
+		foreach ($states as $state) {
+			if (in_array($statusName, $state)) {
+				$stateExist = true;
+				break;
+			}
+		}
 
-        // If the state does not exist, we create it
-        if (!$stateExist) {
-            $orderState = new OrderState();
-            $orderState->color = '#4169E1';
-            $orderState->send_email = false;
-            $orderState->module_name = $this->name;
-            $orderState->name = array();
+		// If the state does not exist, we create it
+		if (!$stateExist) {
+			$orderState = new OrderState();
+			$orderState->color = '#4169E1';
+			$orderState->send_email = false;
+			$orderState->module_name = $this->name;
+			$orderState->name = array();
 
-            $languages = Language::getLanguages(false);
+			$languages = Language::getLanguages(false);
 
-            foreach ($languages as $language)
-                $orderState->name[ $language['id_lang'] ] = $statusName;
+			foreach ($languages as $language)
+				$orderState->name[ $language['id_lang'] ] = $statusName;
 
-            // Update object
-            $orderState->add();
-        }
+			// Update object
+			$orderState->add();
+		}
 
-        return true;
+		return true;
 	}
 
-    private function removeOrderStatus() {
-        $statusName = $this->l('Awaiting PayPro payment');
-        $states = OrderState::getOrderStates((int)$this->context->language->id);
+	private function removeOrderStatus() {
+		$statusName = $this->l('Awaiting PayPro payment');
+		$states = OrderState::getOrderStates((int)$this->context->language->id);
 
-        foreach ($states as $state) {
-            if (in_array($statusName, $state)) {
-                $orderState = new OrderState($state['id_order_state']);
-                $orderState->deleted = 1;
-                $orderState->update();
-            }
-        }
+		foreach ($states as $state) {
+			if (in_array($statusName, $state)) {
+				$orderState = new OrderState($state['id_order_state']);
+				$orderState->deleted = 1;
+				$orderState->update();
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 	public function getContent() {
 		// Check post
@@ -196,10 +196,10 @@ class PayPro extends PaymentModule {
 		$states = OrderState::getOrderStates((int)$this->context->language->id);
 
 		foreach ($states as $state) {
-            if (in_array($statusName, $state)) {
-                return $state['id_order_state'];
-            }
-        }
+			if (in_array($statusName, $state)) {
+				return $state['id_order_state'];
+			}
+		}
 	}
 
 	public function processPayment($cartID, $paymentHash) {
@@ -214,8 +214,8 @@ class PayPro extends PaymentModule {
 				case 'cancelled':
 					$status = Configuration::get('PS_OS_ERROR');
 					break;
-                default:
-                    $status = $this->getOrderStatusId();
+				default:
+					$status = $this->getOrderStatusId();
 			}
 
 			// Order update
