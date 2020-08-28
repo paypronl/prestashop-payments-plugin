@@ -2,7 +2,7 @@
 
 # PayPro Gateways - Prestashop
 
-[![Software License](https://img.shields.io/badge/License-MIT.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/License-MIT.svg?style=flat-square)](LICENSE)
 
 With this plugin you easily add all PayPro payment gateways to your Prestashop webshop. Currently the plugin supports the following gateways:
 
