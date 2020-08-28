@@ -16,7 +16,7 @@ class PayPro extends PaymentModule {
 	public function __construct() {
 		$this->name = 'paypro';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.0.1';
+		$this->version = '1.0.2';
 		$this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
 		$this->author = 'PayPro';
 		$this->controllers = ['payment', 'validation', 'callback'];
