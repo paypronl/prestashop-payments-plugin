@@ -32,7 +32,7 @@ class PayProPaymentModuleFrontController extends ModuleFrontController {
 			'return_url' => $redirectUrl,
 			'cancel_url' => $cancelUrl,
 			'postback_url' => $callbackUrl,
-			'description' => strval($cart->id),
+			'description' => 'Order: ' . strval($cart->id),
 			'locale' => strtoupper($language->iso_code),
 			'custom' => strval($cart->id),
 			'consumer_email' => $customer->email,
