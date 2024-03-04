@@ -1,6 +1,5 @@
 <?php
 
-
 class PayProPaymentModuleFrontController extends ModuleFrontController {
 
 	public function postProcess() {

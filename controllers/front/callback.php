@@ -1,6 +1,5 @@
 <?php
 
-
 class PayProCallbackModuleFrontController extends ModuleFrontController {
 
 	public function postProcess() {

@@ -1,6 +1,6 @@
 <section>
     <p>
-        <select class="form-control form-control-select" id="paypro_ideal_issuer" onchange="onIssuerChange()">
+        <select class="form-control form-control-select" id="paypro-ideal-issuer-select">
             <option value="">{l s='Select your bank' mod='paypro'}</option>
             {foreach $issuers as $key => $value}
                 <option value="{$key}">
@@ -9,62 +9,60 @@
             {/foreach}
         </select>
     </p>
+
+    <div id="paypro-ideal-issuer-error" class="alert alert-danger" role="alert" data-alert="danger" style="display: none;">
+        {l s='You have to select a bank' mod='paypro' }
+    </div>
 </section>
 
 <script type="text/javascript">
-    var paymentConfirmation;
-    var paymentConfirmationClone;
-    var isIdeal = false;
-
-    function docReady(fn) {
-        // see if DOM is already available
-        if (document.readyState === "complete" || document.readyState === "interactive") {
-            // call on next available tick
-            setTimeout(fn, 1);
-        } else {
-            document.addEventListener("DOMContentLoaded", fn);
-        }
-    }
-
-    docReady(function() {
-        var listener = function(e) {
-            var form = document.getElementById('pay-with-' + e.target.id + '-form');
-            if (form) {
-                var method = form.querySelector('input[name="method"]');
-                isIdeal = method && method.value === 'ideal'
+    (function() {
+        function setupIssuers() {
+            if (document.getElementById('payment-confirmation') === null) {
+                setTimeout(setupIssuers, 100);
+                return;
             }
 
-            handleIdealButton();
-        };
+            const submitButton = document.getElementById('payment-confirmation').querySelector('button');
+            const issuerSelect = document.getElementById('paypro-ideal-issuer-select');
+            const errorContainer = document.getElementById('paypro-ideal-issuer-error');
+            const issuerInput = document.querySelector('[name="paypro_ideal_issuer"]');
 
-        document.querySelectorAll('input[name="payment-option"]').forEach((paymentOptionInput) => {
-            paymentOptionInput.onchange = listener;
-        });
+            submitButton.addEventListener('click', function(event) {
+                hideElement(errorContainer);
 
-        // Add a payment confirmation clone so we can disable it when there is no ideal issuer selected
-        paymentConfirmation = document.getElementById('payment-confirmation');
-        paymentConfirmationClone = paymentConfirmation.cloneNode(true);
-        paymentConfirmationClone.id = 'payment-confirmation-clone';
-        paymentConfirmationClone.style.display = 'none';
-        paymentConfirmation.parentNode.appendChild(paymentConfirmationClone);
-    });
+                if (idealSelected() && issuerSelect.value === '') {
+                    event.stopPropagation();
+                    showElement(errorContainer);
+                } else {
+                    issuerInput.value = issuerSelect.value;
+                }
+            });
 
-    function onIssuerChange() {
-        document.getElementsByName('paypro_ideal_issuer')[0].value = document.getElementById('paypro_ideal_issuer').value;
-        handleIdealButton();
-    }
-
-    function handleIdealButton() {
-        var issuer = document.getElementsByName('paypro_ideal_issuer')[0].value;
-
-        if (isIdeal && issuer === '') {
-            // Hide original button and show clone
-            paymentConfirmation.setAttribute('style', 'visibility: hidden; height: 0;');
-            paymentConfirmationClone.style.display = 'block';
-        } else {
-            // Hide clone and show original
-            paymentConfirmation.setAttribute('style', 'visibility: visible; height: auto;');
-            paymentConfirmationClone.style.display = 'none';
+            issuerSelect.addEventListener('change', function(event) {
+                hideElement(errorContainer);
+            });
         }
-    }
+
+        function idealSelected() {
+            const radioInput = document.querySelector('input[name="payment-option"]:checked');
+
+            if (radioInput === null) { return false; }
+
+            const container = document.getElementById('pay-with-' + radioInput.id + '-form');
+            const input = container.querySelector('input[name="method"]');
+
+            return input.value === 'ideal';
+        }
+
+        function hideElement(element) {
+            element.style.display = 'none';
+        }
+
+        function showElement(element) {
+            element.style.display = 'block';
+        }
+
+        setupIssuers();
+    }());
 </script>
